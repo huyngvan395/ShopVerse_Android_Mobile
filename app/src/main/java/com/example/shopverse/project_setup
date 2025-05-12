@@ -1,0 +1,42 @@
+🌟 App Đa Năng: Shop & Social (Kotlin + Laravel)
+🛠 Công Nghệ Sử Dụng
+Frontend:
+Kotlin Android (Native): Dành riêng cho Android.
+Kotlin Multiplatform Mobile (KMM): Nếu muốn hỗ trợ cả iOS sau này.
+Jetpack Compose: UI hiện đại, dễ tùy chỉnh.
+Backend: Laravel + Firebase (real-time chat).
+Database: MySQL hoặc PostgreSQL.
+Mini-game: Unity (cho game phức tạp) hoặc Jetpack Compose Canvas (cho game đơn giản).
+Thanh toán: Tích hợp Momo, VNPay, ZaloPay, PayPal, Stripe.
+📌 Các tính năng chính
+1️⃣ Mua Sắm Online 🛍
+✔️ Đăng sản phẩm, tìm kiếm & mua hàng.
+✔️ Livestream bán hàng ngay trong app.
+✔️ Review & đánh giá sản phẩm.
+✔️ Đề xuất sản phẩm AI dựa trên hành vi mua sắm.
+
+2️⃣ Mạng Xã Hội & Chat 💬
+✔️ Chat 1-1 & nhóm, gửi ảnh, voice chat.
+✔️ Newsfeed giống Facebook, nơi người dùng chia sẻ deal hot.
+✔️ Livestream & video ngắn (giống TikTok nhưng dành cho mua sắm).
+
+3️⃣ Thanh Toán QR & Ví Điện Tử 💰
+✔️ Tích hợp thanh toán QR code (Momo, VNPay, ZaloPay, Apple Pay, Google Pay).
+✔️ Ví điện tử trong app để nhận thưởng & đổi quà.
+✔️ Chia hóa đơn khi mua chung.
+
+4️⃣ Mini-game Kiếm Xu Đổi Quà 🎮
+✔️ Trò chơi đơn giản: vòng quay may mắn, đoán giá, đập hộp quà.
+✔️ Nhận xu khi mua sắm & chơi game.
+✔️ Sự kiện Flash Sale theo mùa.
+
+5️⃣ Flash Sale & Sự Kiện 🚀
+✔️ Đấu giá sản phẩm.
+✔️ Mua chung giá rẻ.
+✔️ Giới thiệu bạn bè để nhận xu.
+
+🚀 Lợi ích & Tiềm năng
+✅ Tạo hệ sinh thái đa năng (mua sắm + MXH + thanh toán + game).
+✅ Tăng tương tác & giữ chân người dùng với game và phần thưởng.
+✅ Kiếm tiền từ phí hoa hồng, quảng cáo, VIP & nạp xu.
+✅ Dễ mở rộng với AI đề xuất sản phẩm & chatbot hỗ trợ.
