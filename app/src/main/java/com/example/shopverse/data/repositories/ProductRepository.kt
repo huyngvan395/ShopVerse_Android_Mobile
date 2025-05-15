@@ -17,4 +17,7 @@ class ProductRepository(private val productApi: ProductApi) {
     suspend fun addToFavourite(addToFavouriteRequest: AddToFavouriteRequest):Boolean{
         return productApi.addToFavourite(addToFavouriteRequest)
     }
+    suspend fun getProductWishList(userId: Int):List<Product>{
+        return productApi.getProductWishList(userId)
+    }
 }

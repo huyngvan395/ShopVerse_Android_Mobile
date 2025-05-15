@@ -1,18 +1,21 @@
 package com.example.shopverse.viewmodel.shop
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopverse.MyApplication
 import com.example.shopverse.data.models.CartItem
 import com.example.shopverse.data.models.request.UpdateQuantityRequest
 import com.example.shopverse.data.repositories.CartRepository
+import com.example.shopverse.data.repositories.ReviewRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CartViewModel(
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val reviewRepository: ReviewRepository
 ): ViewModel() {
     private val _listCartItem = MutableStateFlow<List<CartItem>>(emptyList())
     val listCartItem: StateFlow<List<CartItem>> = _listCartItem.asStateFlow()
@@ -55,6 +58,7 @@ class CartViewModel(
         viewModelScope.launch {
             val result = cartRepository.getQuantitySelected(user!!.id)
             _quantitySelected.value = result
+            Log.d("quantitySelected", quantitySelected.value.toString())
         }
     }
 

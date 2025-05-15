@@ -26,4 +26,7 @@ object RetrofitClient {
     val reviewApi: ReviewApi by lazy {
         retrofit.create(ReviewApi::class.java)
     }
+    val categoryApi: CategoryApi by lazy {
+        retrofit.create(CategoryApi::class.java)
+    }
 }

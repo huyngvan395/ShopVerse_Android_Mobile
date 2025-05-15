@@ -1,7 +1,6 @@
 package com.example.shopverse.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,11 +21,17 @@ import com.example.shopverse.viewmodel.social.PersonalViewModel
 import com.example.shopverse.ui.screen.profile.ProfileScreen
 import com.example.shopverse.ui.screen.profile.UpdatePersonalInfoScreen
 import com.example.shopverse.ui.screen.shop.CartScreen
+import com.example.shopverse.ui.screen.shop.CategoryScreen
+import com.example.shopverse.ui.screen.shop.CheckoutScreen
 import com.example.shopverse.ui.screen.shop.ProductDetailScreen
+import com.example.shopverse.ui.screen.shop.WishListScreen
 import com.example.shopverse.ui.screen.social.CommunityScreen
 import com.example.shopverse.viewmodel.profile.UpdatePersonalInfoViewModel
 import com.example.shopverse.viewmodel.shop.CartViewModel
+import com.example.shopverse.viewmodel.shop.CategoryViewModel
+import com.example.shopverse.viewmodel.shop.CheckoutViewModel
 import com.example.shopverse.viewmodel.shop.ProductDetailViewModel
+import com.example.shopverse.viewmodel.shop.WishListViewModel
 
 @Composable
 fun AppNavigation(){
@@ -99,6 +104,45 @@ fun AppNavigation(){
             val cartViewModel: CartViewModel = viewModel(factory = appContainer.provideCartViewModelFactory())
             CartScreen(cartViewModel,navController)
         }
+
+        composable(
+            route = Screen.CategoryScreen.route
+        ) {
+            val categoryViewModel:CategoryViewModel = viewModel(factory = appContainer.provideCategoryViewModelFactory())
+            CategoryScreen(categoryViewModel,navController)
+        }
+
+        composable(
+            route = Screen.WishlistScreen.route
+        ) {
+            val wishListViewModel: WishListViewModel = viewModel(factory = appContainer.provideWishListViewModelFactory() )
+            WishListScreen(wishListViewModel,navController)
+        }
+
+        composable(
+            route = Screen.CheckoutBuyNowScreen.route,
+                arguments = listOf(
+                    navArgument("productId"){
+                        type = NavType.IntType
+                    },
+                    navArgument("quantity"){
+                        type = NavType.IntType
+                    }
+                )
+        ) {navBackStackEntry ->
+            val productId:Int? =navBackStackEntry.arguments?.getInt("productId")
+            val quantity:Int? = navBackStackEntry.arguments?.getInt("quantity")
+            val checkoutViewModel:CheckoutViewModel = viewModel(factory = appContainer.provideCheckoutViewModelFactory())
+            CheckoutScreen(navController,checkoutViewModel, mode = "buyNow", productId = productId, quantity = quantity)
+        }
+
+        composable(
+            route = Screen.CheckoutFromCartScreen.route
+        ) {
+            val checkoutViewModel:CheckoutViewModel = viewModel(factory = appContainer.provideCheckoutViewModelFactory())
+            CheckoutScreen(navController,checkoutViewModel, mode = "fromCart", productId = null, quantity = null)
+        }
+
 
     }
 }

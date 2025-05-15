@@ -93,7 +93,7 @@ fun HomeScreen(
                             },
                             onToggleFavorite = {
                                 scope.launch {
-                                    product.isFavourite=homeViewModel.addFavourite(AddToFavouriteRequest(currentUser!!.id,product.id))
+                                    homeViewModel.addFavourite(AddToFavouriteRequest(currentUser!!.id,product.id))
                                 }
                             }
                         )

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -56,8 +57,8 @@ fun BottomNavBar(
 ){
     val items = listOf(
         BottomNavItem("home", "Trang chủ", IconType.Vector(Icons.Default.Home)),
-        BottomNavItem("community", "Cộng đồng", IconType.PainterIcon(painterResource(R.drawable.social))),
-        BottomNavItem("notifications", "Thông báo", IconType.Vector(Icons.Default.Notifications),3),
+        BottomNavItem("category", "Danh mục", IconType.PainterIcon(painterResource(R.drawable.category))),
+        BottomNavItem("wishlist", "Yêu thích", IconType.Vector(Icons.Default.FavoriteBorder)),
         BottomNavItem("user/profile", "Cá nhân", IconType.Vector(Icons.Default.Person))
     )
 

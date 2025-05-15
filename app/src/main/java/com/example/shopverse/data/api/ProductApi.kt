@@ -16,4 +16,6 @@ interface ProductApi {
     suspend fun filterProductByCategory(@Path("category") category: String): List<Product>
     @POST("product/add-favourite")
     suspend fun addToFavourite(@Body addToFavouriteRequest: AddToFavouriteRequest): Boolean
+    @GET("product/products/wishlist/{id}")
+    suspend fun getProductWishList(@Path("id") id: Int):List<Product>
 }

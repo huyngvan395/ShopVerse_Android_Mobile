@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -61,12 +63,14 @@ fun CartScreen(
                     textAlign = TextAlign.Center
                 )
             }
-            LazyColumn() {
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
                 items(listCartItem) { cartItem ->
                     CartProductCard(
                         cartItem = cartItem,
                         rating = 5.0,
-                        reviews = "14",
+                        reviews = cartItem.product.reviewCount!!,
                         onClick = {
                             navController.navigate("product/${cartItem.product.id}")
                         },
@@ -74,7 +78,8 @@ fun CartScreen(
                         onQuantityChange = { newQuantity->
                             cartViewModel.updateCartItem(cartItem.id, UpdateQuantityRequest(newQuantity))
                         },
-                        isSelected = cartItem.selected
+                        isSelected = cartItem.selected,
+                        onSelected = {cartViewModel.updateSelected(cartItem.id)}
                     )
                 }
             }
@@ -106,14 +111,16 @@ fun CartBottomBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .height(50.dp)
+            .padding(15.dp)
     ) {
         Button(
             onClick = {onBuy()},
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 15.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MainColor
-            )
+            ),
+            enabled = quantitySelected>0,
+            shape = RoundedCornerShape(8.dp)
         ) {
             Text(
                 text = "Mua hàng(${quantitySelected})",

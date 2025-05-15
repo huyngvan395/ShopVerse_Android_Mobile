@@ -60,7 +60,7 @@ fun ProductCard(
     onToggleFavorite: () -> Unit = {}
 ) {
 
-    var isFavourite by remember { mutableStateOf(product.isFavourite) }
+    var isFavourite by remember { mutableStateOf(product.favourite != null) }
     Card(
         modifier = modifier
             .width(180.dp)
@@ -108,7 +108,7 @@ fun ProductCard(
                     Icon(
                         imageVector = if (isFavourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = "Yêu thích",
-                        tint = if (product.isFavourite) MainColor else Color.Gray
+                        tint = if (isFavourite) MainColor else Color.Gray
                     )
                 }
             }
@@ -149,7 +149,7 @@ fun ProductCard(
                     )
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
-                        text = "(17)"
+                        text = if(product.reviewCount==null) "(0)" else "(${product.reviewCount})"
                     )
                 }
             }

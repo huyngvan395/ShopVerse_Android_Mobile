@@ -71,7 +71,7 @@ fun CartProductCard(
     isSelected: Boolean,
     cartItem: CartItem,
     rating: Double,
-    reviews: String,
+    reviews: Int,
     modifier: Modifier = Modifier,
     onClick: ()->Unit ={},
     onQuantityChange: (Int) -> Unit ={},
@@ -160,21 +160,23 @@ fun CartProductCard(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "$rating",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = MainColor
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = null,
-                        tint = starColor,
-                        modifier = Modifier.size(18.dp)
-                    )
+                    if(reviews>0){
+                        Text(
+                            text = "$rating",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = MainColor
+                        )
+                        Icon(
+                            imageVector = Icons.Filled.Star,
+                            contentDescription = null,
+                            tint = starColor,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "($reviews đánh giá)",
+                        text =if(reviews==0) "(Chưa có đánh giá nào)" else "($reviews đánh giá)",
                         fontSize = 16.sp,
                         color = MainColor
                     )

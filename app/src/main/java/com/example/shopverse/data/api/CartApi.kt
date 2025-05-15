@@ -2,6 +2,7 @@ package com.example.shopverse.data.api
 
 import com.example.shopverse.data.models.Cart
 import com.example.shopverse.data.models.CartItem
+import com.example.shopverse.data.models.request.AddAllSelectedRequest
 import com.example.shopverse.data.models.request.AddToCartRequest
 import com.example.shopverse.data.models.request.UpdateQuantityRequest
 import okhttp3.ResponseBody
@@ -27,4 +28,6 @@ interface CartApi {
     suspend fun getQuantitySelected(@Path("id") id: Int): Int
     @POST("cart/update/selected/{id}")
     suspend fun updateSelectedCart(@Path("id") id: Int): Boolean
+    @POST("cart/update/all-selected/{id}")
+    suspend fun updateAllSelectedCart(@Path("id") id: Int,addAllSelectedRequest: AddAllSelectedRequest): Boolean
 }

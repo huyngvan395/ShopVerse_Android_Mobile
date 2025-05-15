@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.shopverse.MyApplication
 import com.example.shopverse.R
 import com.example.shopverse.data.repositories.AuthRepository
@@ -112,8 +113,8 @@ fun ProfileScreen(
                             shape = CircleShape,
                             elevation = CardDefaults.cardElevation(4.dp)
                         ) {
-                            Image(
-                                painter = painterResource(R.drawable.avatar),
+                            AsyncImage(
+                                model = currentUser?.imageURL,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(50.dp)
