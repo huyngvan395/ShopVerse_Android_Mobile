@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,14 +33,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.example.shopverse.MyApplication
 import com.example.shopverse.data.api.ProductApi
 import com.example.shopverse.data.api.RetrofitClient
+import com.example.shopverse.data.models.request.AddToFavouriteRequest
 import com.example.shopverse.data.repositories.ProductRepository
 import com.example.shopverse.navigation.Screen
 import com.example.shopverse.ui.components.BottomNavBar
 import com.example.shopverse.ui.components.ProductCard
 import com.example.shopverse.ui.components.TopBarShop
 import com.example.shopverse.viewmodel.shop.HomeViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -52,6 +56,8 @@ fun HomeScreen(
     val scrollState = rememberScrollState()
     var searchText by remember { mutableStateOf("") }
     val cartCount by homeViewModel.cartCount.asIntState()
+    val currentUser = MyApplication.appContainer.getCurrentUser()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         homeViewModel.getCartCount()
@@ -84,6 +90,11 @@ fun HomeScreen(
                             product = product,
                             onClick = {
                                 navController.navigate("product/${product.id}")
+                            },
+                            onToggleFavorite = {
+                                scope.launch {
+                                    product.isFavourite=homeViewModel.addFavourite(AddToFavouriteRequest(currentUser!!.id,product.id))
+                                }
                             }
                         )
                     }

@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopverse.MyApplication
 import com.example.shopverse.data.models.Product
+import com.example.shopverse.data.models.request.AddToFavouriteRequest
 import com.example.shopverse.data.repositories.CartRepository
 import com.example.shopverse.data.repositories.ProductRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -58,6 +60,13 @@ class HomeViewModel(
         }
     }
 
-
+    suspend fun addFavourite(addToFavouriteRequest: AddToFavouriteRequest):Boolean{
+        return try {
+            productRepository.addToFavourite(addToFavouriteRequest)
+        } catch (e:Exception){
+            Log.e("HomeViewModel","Lỗi khi cập nhật yêu thích: ${e.message}")
+            false
+        }
+    }
 
 }

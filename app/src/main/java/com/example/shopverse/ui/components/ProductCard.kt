@@ -59,6 +59,8 @@ fun ProductCard(
     onClick: () -> Unit = {},
     onToggleFavorite: () -> Unit = {}
 ) {
+
+    var isFavourite by remember { mutableStateOf(product.isFavourite) }
     Card(
         modifier = modifier
             .width(180.dp)
@@ -93,7 +95,10 @@ fun ProductCard(
                 }
 
                 IconButton(
-                    onClick = { onToggleFavorite() },
+                    onClick = {
+                        isFavourite = !isFavourite
+                        onToggleFavorite()
+                    },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
@@ -101,7 +106,7 @@ fun ProductCard(
                         .size(32.dp)
                 ) {
                     Icon(
-                        imageVector = if (product.isFavourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                        imageVector = if (isFavourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = "Yêu thích",
                         tint = if (product.isFavourite) MainColor else Color.Gray
                     )
@@ -152,9 +157,4 @@ fun ProductCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewProductCard(){
-
-}
 

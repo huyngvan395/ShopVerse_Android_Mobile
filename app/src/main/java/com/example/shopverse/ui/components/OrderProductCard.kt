@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
@@ -79,12 +79,11 @@ fun OrderProductCard(
                 ) {
                     Text(
                         text = "1000000đ",
-                        fontSize = 18.sp,
-
+                        fontSize = 18.sp
                     )
                     Text(
                         text = "x1",
-                        fontSize = 15.sp,
+                        fontSize = 18.sp,
                     )
                 }
             }

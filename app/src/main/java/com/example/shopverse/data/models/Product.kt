@@ -9,7 +9,7 @@ data class Product(
     val imageUrl: String,
     val price: BigDecimal,
     val category: Category,
-    val isFavourite: Boolean,
+    var isFavourite:Boolean,
     val stock: Int,
     val rating: BigDecimal
 )
