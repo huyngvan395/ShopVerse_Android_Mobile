@@ -15,4 +15,8 @@ sealed class Screen (val route: String) {
     data object WishlistScreen: Screen("wishlist")
     data object CheckoutBuyNowScreen: Screen("checkout/buyNow/{productId}/{quantity}")
     data object CheckoutFromCartScreen: Screen("checkout/fromCart")
+    data object SelectAddressScreen: Screen("address/select")
+    data object OrderSuccessScreen: Screen("order_success")
+    data object OrderScreen: Screen("order")
+    data object SearchResultScreen: Screen("search-result/{search}")
 }

@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shopverse.data.api.RetrofitClient
 import com.example.shopverse.data.models.User
+import com.example.shopverse.data.repositories.AddressRepository
 import com.example.shopverse.data.repositories.AuthRepository
 import com.example.shopverse.data.repositories.CartRepository
 import com.example.shopverse.data.repositories.CategoryRepository
+import com.example.shopverse.data.repositories.OrderRepository
 import com.example.shopverse.data.repositories.ProductRepository
 import com.example.shopverse.data.repositories.ReviewRepository
 import com.example.shopverse.data.repositories.UserRepository
@@ -20,7 +22,10 @@ import com.example.shopverse.viewmodel.shop.CartViewModel
 import com.example.shopverse.viewmodel.shop.CategoryViewModel
 import com.example.shopverse.viewmodel.shop.CheckoutViewModel
 import com.example.shopverse.viewmodel.shop.HomeViewModel
+import com.example.shopverse.viewmodel.shop.OrderViewModel
 import com.example.shopverse.viewmodel.shop.ProductDetailViewModel
+import com.example.shopverse.viewmodel.shop.SearchResultViewModel
+import com.example.shopverse.viewmodel.shop.SelectAddressViewModel
 import com.example.shopverse.viewmodel.shop.WishListViewModel
 import com.example.shopverse.viewmodel.social.PersonalViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +37,8 @@ class AppContainer(private val context: Context) {
     private val userApi = RetrofitClient.userApi
     private val reviewApi = RetrofitClient.reviewApi
     private val categoryApi = RetrofitClient.categoryApi
+    private val orderApi = RetrofitClient.orderApi
+    private val addressApi = RetrofitClient.addressApi
 
     private val authRepository = AuthRepository(authApi)
     private val productRepository = ProductRepository(productApi)
@@ -39,6 +46,8 @@ class AppContainer(private val context: Context) {
     private val reviewRepository = ReviewRepository(reviewApi)
     private val cartRepository = CartRepository(cartApi)
     private val categoryRepository = CategoryRepository(categoryApi)
+    private val orderRepository = OrderRepository(orderApi)
+    private val addressRepository = AddressRepository(addressApi)
 
 
     private var currentUser = MutableStateFlow<User?>(null)
@@ -87,7 +96,7 @@ class AppContainer(private val context: Context) {
     fun provideProfileViewModelFactory(): ViewModelProvider.Factory{
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return ProfileViewModel( authRepository, productRepository) as T
+                return ProfileViewModel( authRepository, productRepository,orderRepository) as T
             }
         }
     }
@@ -127,7 +136,31 @@ class AppContainer(private val context: Context) {
     fun provideCheckoutViewModelFactory():ViewModelProvider.Factory{
         return object : ViewModelProvider.Factory{
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return CheckoutViewModel(cartRepository, productRepository) as T
+                return CheckoutViewModel(cartRepository, productRepository, orderRepository, addressRepository) as T
+            }
+        }
+    }
+
+    fun provideSelectAddressViewModelFactory():ViewModelProvider.Factory{
+        return object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return SelectAddressViewModel(addressRepository) as T
+            }
+        }
+    }
+
+    fun provideOrderViewModelFactory():ViewModelProvider.Factory{
+        return object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return OrderViewModel(orderRepository) as T
+            }
+        }
+    }
+
+    fun provideSearchResultViewModelFactory(search:String):ViewModelProvider.Factory{
+        return object : ViewModelProvider.Factory{
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return SearchResultViewModel(productRepository,cartRepository,search) as T
             }
         }
     }

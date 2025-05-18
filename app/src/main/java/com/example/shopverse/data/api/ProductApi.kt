@@ -14,8 +14,12 @@ interface ProductApi {
     suspend fun getProductById(@Path("id") id: Int, @Path("userId") userId: Int): Product
     @GET("product/{category}")
     suspend fun filterProductByCategory(@Path("category") category: String): List<Product>
+    @GET("product/products/{id}/search/{search}")
+    suspend fun searchProducts(@Path("id") id: Int,@Path("search") search: String):List<Product>
     @POST("product/add-favourite")
     suspend fun addToFavourite(@Body addToFavouriteRequest: AddToFavouriteRequest): Boolean
     @GET("product/products/wishlist/{id}")
     suspend fun getProductWishList(@Path("id") id: Int):List<Product>
+    @GET("product/products/wishlist/{id}/count")
+    suspend fun getWishListCount(@Path("id") id:Int):Int
 }

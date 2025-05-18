@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.shopverse.data.models.request.UpdateQuantityRequest
+import com.example.shopverse.navigation.Screen
 import com.example.shopverse.ui.components.CartProductCard
 import com.example.shopverse.ui.theme.MainColor
 import com.example.shopverse.viewmodel.shop.CartViewModel
@@ -48,7 +49,7 @@ fun CartScreen(
         topBar = { CartTopBar(
             onBackClick = {navController.popBackStack()}
         ) },
-        bottomBar = { CartBottomBar(quantitySelected = quantitySelected) }
+        bottomBar = { CartBottomBar(quantitySelected = quantitySelected, onBuy = {navController.navigate(Screen.CheckoutFromCartScreen.route)}) }
     ) {paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues)

@@ -29,4 +29,10 @@ object RetrofitClient {
     val categoryApi: CategoryApi by lazy {
         retrofit.create(CategoryApi::class.java)
     }
+    val orderApi: OrderApi by lazy {
+        retrofit.create(OrderApi::class.java)
+    }
+    val addressApi: AddressApi by lazy {
+        retrofit.create(AddressApi::class.java)
+    }
 }

@@ -20,4 +20,10 @@ class ProductRepository(private val productApi: ProductApi) {
     suspend fun getProductWishList(userId: Int):List<Product>{
         return productApi.getProductWishList(userId)
     }
+    suspend fun getWishListCount(id:Int):Int{
+        return productApi.getWishListCount(id)
+    }
+    suspend fun searchProducts(id:Int,search:String):List<Product>{
+        return productApi.searchProducts(id,search)
+    }
 }

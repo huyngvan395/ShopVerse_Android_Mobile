@@ -166,8 +166,8 @@ fun ProductDetailScreen(
                     if (actionType == "add_to_cart") {
                         Log.d("addtocart",AddToCartRequest(product!!.id,quantity,MyApplication.appContainer.getCurrentUser()!!.id).toString())
                         productDetailViewModel.addToCart(AddToCartRequest(product!!.id,quantity,MyApplication.appContainer.getCurrentUser()!!.id))
-                    } else {
-                        TODO()
+                    } else if(actionType == "buy_now") {
+                        navController.navigate("checkout/buyNow/${product?.id}/${quantity}")
                     }
                 },
                 type = contentActionType,

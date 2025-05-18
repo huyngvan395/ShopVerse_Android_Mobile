@@ -23,14 +23,21 @@ import com.example.shopverse.ui.screen.profile.UpdatePersonalInfoScreen
 import com.example.shopverse.ui.screen.shop.CartScreen
 import com.example.shopverse.ui.screen.shop.CategoryScreen
 import com.example.shopverse.ui.screen.shop.CheckoutScreen
+import com.example.shopverse.ui.screen.shop.OrderScreen
+import com.example.shopverse.ui.screen.shop.OrderSuccessScreen
 import com.example.shopverse.ui.screen.shop.ProductDetailScreen
+import com.example.shopverse.ui.screen.shop.SearchResultScreen
+import com.example.shopverse.ui.screen.shop.SelectAddressScreen
 import com.example.shopverse.ui.screen.shop.WishListScreen
 import com.example.shopverse.ui.screen.social.CommunityScreen
 import com.example.shopverse.viewmodel.profile.UpdatePersonalInfoViewModel
 import com.example.shopverse.viewmodel.shop.CartViewModel
 import com.example.shopverse.viewmodel.shop.CategoryViewModel
 import com.example.shopverse.viewmodel.shop.CheckoutViewModel
+import com.example.shopverse.viewmodel.shop.OrderViewModel
 import com.example.shopverse.viewmodel.shop.ProductDetailViewModel
+import com.example.shopverse.viewmodel.shop.SearchResultViewModel
+import com.example.shopverse.viewmodel.shop.SelectAddressViewModel
 import com.example.shopverse.viewmodel.shop.WishListViewModel
 
 @Composable
@@ -78,7 +85,7 @@ fun AppNavigation(){
             route = Screen.ProfileScreen.route,
         ) {
             val profileViewModel: ProfileViewModel = viewModel(factory = appContainer.provideProfileViewModelFactory())
-            ProfileScreen(navController)
+            ProfileScreen(navController,profileViewModel)
         }
         composable(
             route = Screen.UpdateInformationScreen.route,
@@ -143,6 +150,37 @@ fun AppNavigation(){
             CheckoutScreen(navController,checkoutViewModel, mode = "fromCart", productId = null, quantity = null)
         }
 
+        composable(
+            route = Screen.SelectAddressScreen.route
+        ) {
+            val selectAddressViewModel:SelectAddressViewModel = viewModel(factory = appContainer.provideSelectAddressViewModelFactory())
+            SelectAddressScreen(selectAddressViewModel,navController)
+        }
 
+        composable(
+            route = Screen.OrderSuccessScreen.route
+        ) {
+            OrderSuccessScreen(navController)
+        }
+
+        composable(
+            route = Screen.OrderScreen.route
+        ) {
+            val orderViewModel:OrderViewModel = viewModel(factory = appContainer.provideOrderViewModelFactory())
+            OrderScreen(navController,orderViewModel)
+        }
+
+        composable(
+            route = Screen.SearchResultScreen.route,
+            arguments = listOf(
+                navArgument("search"){
+                    type = NavType.StringType
+                }
+            )
+        ) {navBackStackEntry ->
+            val search:String? =navBackStackEntry.arguments?.getString("search")
+            val searchResultViewModel:SearchResultViewModel = viewModel(factory = appContainer.provideSearchResultViewModelFactory(search!!))
+            SearchResultScreen(searchResultViewModel,navController)
+        }
     }
 }

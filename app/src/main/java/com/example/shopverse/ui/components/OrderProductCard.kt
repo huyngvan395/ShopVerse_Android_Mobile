@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,11 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.shopverse.data.models.OrderItem
+import com.example.shopverse.data.models.Product
 
 @Composable
 fun OrderProductCard(
-//    orderItem: OrderItem,
-    onClick: () -> Unit = {}
+    product: Product,
+    quantity:Int,
+    onClick: () -> Unit = {},
+    modifier: Modifier=Modifier
 ){
     Card(
         modifier = Modifier
@@ -40,7 +44,8 @@ fun OrderProductCard(
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
-        )
+        ),
+        shape = RectangleShape
     ) {
         Row(
             modifier = Modifier
@@ -52,7 +57,7 @@ fun OrderProductCard(
                 elevation = CardDefaults.elevatedCardElevation(5.dp),
             ) {
                 AsyncImage(
-                    model = "https://www.bigfootdigital.co.uk/wp-content/uploads/2020/07/image-optimisation-scaled.jpg",
+                    model = product.imageUrl,
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -68,7 +73,7 @@ fun OrderProductCard(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Tên sản phẩm",
+                    text = product.name,
                     fontSize = 22.sp,
                     fontWeight = FontWeight(400),
                     maxLines = 2
@@ -78,21 +83,15 @@ fun OrderProductCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "1000000đ",
+                        text = "${product.price}đ",
                         fontSize = 18.sp
                     )
                     Text(
-                        text = "x1",
+                        text = "x$quantity",
                         fontSize = 18.sp,
                     )
                 }
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewOrderProductCard(){
-        OrderProductCard()
 }

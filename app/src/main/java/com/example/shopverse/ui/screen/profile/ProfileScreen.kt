@@ -33,6 +33,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -52,12 +54,15 @@ import com.example.shopverse.data.repositories.AuthRepository
 import com.example.shopverse.navigation.Screen
 import com.example.shopverse.ui.components.BottomNavBar
 import com.example.shopverse.ui.theme.MainColor
+import com.example.shopverse.viewmodel.profile.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController,
+    profileViewModel: ProfileViewModel
 ){
     val currentUser = MyApplication.appContainer.getCurrentUser()
+    val wishListCount by profileViewModel.wishListCount.collectAsState()
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -146,15 +151,14 @@ fun ProfileScreen(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        UltilityItem("Đơn hàng", painterResource(R.drawable.shopping_bag),10)
+                        UltilityItem("Đơn hàng", painterResource(R.drawable.shopping_bag),1, onClick = {navController.navigate("order")})
                         Spacer(modifier = Modifier.width(20.dp))
-                        UltilityItem("Yêu thích", Icons.Default.FavoriteBorder, 5)
+                        UltilityItem("Yêu thích", Icons.Default.FavoriteBorder, wishListCount, onClick = {navController.navigate("wishlist")})
                         Spacer(modifier = Modifier.width(20.dp))
                         UltilityItem("Đang giao", painterResource(R.drawable.local_shipping), 8)
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
-                    //Tài khoản
                     Text(
                         "Tài khoản",
                         fontSize = 25.sp,

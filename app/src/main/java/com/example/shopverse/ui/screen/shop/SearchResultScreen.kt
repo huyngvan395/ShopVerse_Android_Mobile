@@ -1,21 +1,14 @@
-package com.example.shopverse.ui.screen.home
+package com.example.shopverse.ui.screen.shop
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,42 +20,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
 import com.example.shopverse.MyApplication
-import com.example.shopverse.data.api.ProductApi
-import com.example.shopverse.data.api.RetrofitClient
 import com.example.shopverse.data.models.request.AddToFavouriteRequest
-import com.example.shopverse.data.repositories.ProductRepository
 import com.example.shopverse.navigation.Screen
 import com.example.shopverse.ui.components.BottomNavBar
 import com.example.shopverse.ui.components.ProductCard
 import com.example.shopverse.ui.components.TopBarShop
-import com.example.shopverse.viewmodel.shop.HomeViewModel
+import com.example.shopverse.viewmodel.shop.SearchResultViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(
-    navController: NavController,
-    homeViewModel: HomeViewModel
+fun SearchResultScreen(
+    searchResultViewModel: SearchResultViewModel,
+    navController:NavController
 ){
-    val products by homeViewModel.products.collectAsState()
-    val isLoading by homeViewModel.isLoading.collectAsState()
-    val error by homeViewModel.error.collectAsState()
+    val products by searchResultViewModel.products.collectAsState()
+    val isLoading by searchResultViewModel.isLoading.collectAsState()
+    val error by searchResultViewModel.error.collectAsState()
     val scrollState = rememberScrollState()
     var searchText by remember { mutableStateOf("") }
-    val cartCount by homeViewModel.cartCount.asIntState()
+    val cartCount by searchResultViewModel.cartCount.asIntState()
     val currentUser = MyApplication.appContainer.getCurrentUser()
     val scope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
-        homeViewModel.getCartCount()
+        searchResultViewModel.getCartCount()
     }
 
     Scaffold(
@@ -70,8 +54,7 @@ fun HomeScreen(
             cartCount = cartCount,
             searchText = searchText,
             onSearchChange = {searchText = it},
-            onCartClick = {navController.navigate(Screen.CartScreen.route)},
-            onSearch = {navController.navigate("search-result/$searchText")}
+            onCartClick = {navController.navigate(Screen.CartScreen.route)}
         ) },
         bottomBar = { BottomNavBar(navController) }
     ) {paddingValues ->
@@ -96,7 +79,7 @@ fun HomeScreen(
                             },
                             onToggleFavorite = {
                                 scope.launch {
-                                    homeViewModel.addFavourite(AddToFavouriteRequest(currentUser!!.id,product.id))
+                                    searchResultViewModel.addFavourite(AddToFavouriteRequest(currentUser!!.id,product.id))
                                 }
                             }
                         )
@@ -106,13 +89,3 @@ fun HomeScreen(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewHomeScreen(){
-//    val context = android.content.ContextWrapper(null)
-//    val navController = NavController(context)
-//    val viewModel: HomeViewModel = HomeViewModel(ProductRepository(RetrofitClient.productApi))
-//
-//    HomeScreen(navController, viewModel)
-//}
